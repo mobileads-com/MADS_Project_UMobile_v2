@@ -1,0 +1,212 @@
+@font-face {
+	font-family: "DIN Round Pro Regular";
+	src: url(fonts/DINRoundPro.otf);
+}
+
+@font-face {
+	font-family: "DIN Round Pro Medium";
+	src: url(fonts/DINRoundPro-Medium.otf);
+}
+
+@font-face {
+	font-family: "DIN Round Pro Bold";
+	src: url(fonts/DINRoundPro-Bold.otf);
+}
+
+body {
+	width: 320px;
+	height: 480px;
+	margin: 0;
+	padding: 0;
+	font-family: "DIN Round Pro Regular";
+	overflow: hidden;
+}
+
+#rma-widget{
+	width: 320px;
+	height: 480px;	
+}
+
+.wrapper{
+	width: 320px;
+	height: 480px;
+	position: relative;
+}
+
+.frame_input{
+	width: 320px;
+	height: 124px;
+	margin-top: 356px;
+	border: 1px solid transparent;
+}
+
+.first-holder{
+	background: url("../img/frame_1.png") no-repeat;
+	overflow: hidden;
+}
+
+.second-holder{
+	background: url("../img/frame_2.png") no-repeat;
+	overflow: hidden;
+}
+
+.third-holder{
+	background: url("../img/frame_3.png") no-repeat;
+	overflow: hidden;
+}
+
+.fourth-holder-right{
+	background: url("../img/frame_4_c.png") no-repeat;
+	overflow: hidden;
+}
+
+.fourth-holder-wrong{
+	background: url("../img/frame_4_w.png") no-repeat;
+	overflow: hidden;
+}
+
+.fifth-holder{
+	background: url("../img/frame_5.png") no-repeat;
+	overflow: hidden;
+}
+
+.sixth-holder{
+	background: url("../img/frame_6.png") no-repeat;
+	overflow: hidden;
+}
+
+.final-holder{
+	/*background: url("../img/frame_7.png") no-repeat;*/
+	background-color: #332736;
+	overflow: hidden;
+}
+
+.countdown {
+	font-family: 'DIN Round Pro Bold';
+	font-size: 200pt;
+	text-shadow: 7px 7px #f05323;
+	color: white;
+	margin: 0px;
+	text-align: center;
+	line-height: 355px;
+	transform: rotateZ(-4deg);
+}
+
+.explosion {
+	width: 721px;
+	height: 723px;
+	position: absolute;
+	left: -240px;
+	bottom: 30px;
+}
+
+.hero {
+	width: 272px;
+	height: 70px;
+	position: absolute;
+	left: 24px;
+	top: 150px;
+}
+
+img.logo {
+    margin-top: 135px;
+    margin-left: 98px;
+}
+
+
+.btn{
+	border-radius: 2px
+}
+
+.btn-action{
+	width: 119px;
+}
+
+.btn-select{
+	margin-top: 28px;
+	margin-left: 86px;
+}
+
+.btn-default {
+	color: #FFFFFF;
+	background-color: #413344;
+	border-color: #6d483a;
+}
+
+.dropdown-menu {
+	min-width: 145px;
+}
+
+.dropdown-menu > li{
+	cursor: pointer;
+	padding-left: 13px;
+}
+
+.btn-action:hover, .btn-action:focus, .btn-action.focus {
+	color: #FFFFFF;
+	text-decoration: none;
+	background-color: #413344;
+	border: 1px solid #6d483a;
+}
+
+.btn-orange{
+	color: #ffffff;
+	background-color: #f68b1f;
+	border-color: #f68b1f;
+	border-radius: 2px;
+	font-size: 18px;
+	line-height: 18px;
+}
+
+.button-submit{
+	width: 45%;
+	margin-top: 12px;
+	text-transform: uppercase;
+}
+
+.button-accept{
+	width: 45%;
+	margin-top: 14px;
+	text-transform: uppercase;
+	font-family: 'DIN Round Pro Medium';
+	font-size: 22px;
+}
+
+.input-group-addon {
+	color: #FDFDFD;
+	background-color: #f19a52;
+	border: 1px solid #f19a52;
+}
+
+.form-control-number{
+	color: #FFFFFF;
+	background-color: #f19a52;
+	border: 1px solid #f19a52;
+}
+
+.input-group {
+	margin-left: auto;
+	margin-right: auto;
+	width: 65%;
+}
+
+.input-group-lg > .input-group-addon{
+	border-radius: 2px;
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+	font-size: 20px;
+	line-height: 2px;
+}
+
+.input-group-lg > .form-control{
+	border-radius: 2px;
+	font-size: 20px;
+}
+
+p.notify {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	color: white;
+	margin-top: -30px;
+}
