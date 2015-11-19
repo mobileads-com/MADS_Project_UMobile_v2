@@ -14,7 +14,7 @@ var mads = function () {
 	} else if (typeof custTracker != 'undefined') {
 		this.custTracker = custTracker;
 	} else {
-		this.custTracker = [];
+		this.custTracker =  [];
 	}
 
 	/* Unique ID on each initialise */
@@ -100,6 +100,13 @@ mads.prototype.loadCss = function (href) {
 	this.headTag.appendChild(link);
 };
 
+mads.prototype.listen = function(options) {
+    	var receiveMessage = function(event) {
+      	options.callback(event.data);
+    	}
+    	window.addEventListener("message", receiveMessage, false);
+}
+
 var umobile = function(){
 	var _this = this;
 	this.sdk = new mads();
@@ -109,17 +116,58 @@ var umobile = function(){
 	this.prefix = '+6018'
 	this.number = null;
 	this.choices = ['RM 70', 'RM 128', 'RM 158', 'RM 188'];
+	this.formUrl = 'https://api.mobileads.com/twilio/index.php';
+
+	var startSeconds = new Date().getTime() / 1000;
+	this.sdk.listen({
+		'callback': function(msg) {
+		    	if (typeof msg.auth != 'undefined' && typeof msg.auth.type != 'undefined' && msg.auth.type == 'closeExpandable') {
+				var endSeconds = new Date().getTime() / 1000;
+				var diffSeconds = endSeconds - startSeconds;
+				_this.sdk.tracker('E', 'duration', 'duration', diffSeconds);
+		    	}
+		}
+	});
 
 	this.sdk.loadCss(this.sdk.path + 'css/bootstrap.min.css');
 	this.sdk.loadCss(this.sdk.path + 'css/animate.min.css');
 	this.sdk.loadCss(this.sdk.path + 'css/style.css');
 	this.sdk.loadJs(this.sdk.path + 'js/jquery.js', function(){
 		_this.sdk.loadJs(_this.sdk.path + 'js/bootstrap.min.js');
+		_this.preload();
 		_this.firstScreen(_this.parent);
 	});	
 }
 
 umobile.prototype.isEmpty = function(value){ return typeof value != 'undefined' && $.trim(value) ? false : true; }
+
+umobile.prototype.preload = function(){
+	var _this = this;
+	var script = document.createElement('SCRIPT');
+	var str = '';
+	str = str + 'var frame_1 = new Image();' +
+	'var frame_2 = new Image();' +
+	'var frame_3 = new Image();' +
+	'var frame_4_c = new Image();' +
+	'var frame_4_w = new Image();' +
+	'var frame_5 = new Image();' +
+	'var frame_6 = new Image();' +
+	'var explode = new Image();' +
+	'var hero = new Image();' +
+	'var logo_lg = new Image();' +
+	'frame_1.src='+ _this.sdk.path+' "img/frame_1.png";' +
+	'frame_2.src='+ _this.sdk.path+' "img/frame_2.png";' +
+	'frame_3.src='+ _this.sdk.path+' "img/frame_3.png";' +
+	'frame_4_c.src='+ _this.sdk.path+' "img/frame_4_c.png";' +
+	'frame_4_w.src='+ _this.sdk.path+' "img/frame_4_w.png";' +
+	'frame_5.src='+ _this.sdk.path+' "img/frame_5.png";' + 
+	'frame_6.src='+ _this.sdk.path+' "img/frame_6.png";' +
+	'explode.src='+ _this.sdk.path+' "img/explode.png";' +
+	'hero.src='+ _this.sdk.path+' "img/hero.png";' +
+	'logo_lg.src='+ _this.sdk.path+' "img/logo_lg.png";';
+	script.innerHTML = str;
+	_this.sdk.bodyTag.appendChild(script);
+}
 
 umobile.prototype.firstScreen = function(parent){
 	var _this = this;
@@ -130,11 +178,18 @@ umobile.prototype.firstScreen = function(parent){
 	var frame_input = document.createElement('DIV');
 	frame_input.setAttribute('class', 'frame_input');
 	frame.appendChild(frame_input);
-	frame_input.innerHTML = '<div class="btn-group btn-select dropup"><button type="button" class="btn btn-default btn-action">SELECT COST</button><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu"><li>RM 60</li><li>RM 70</li><li>RM 80</li></ul></div><button type="button" class="btn btn-orange center-block button-submit">Submit</button>'; //<div class="btn-group center-block"><button type="button" class="btn btn-danger">Action</button><button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu"><li><a href="#">Action</a></li><li><a href="#">Another action</a></li><li><a href="#">Something else here</a></li><li role="separator" class="divider"></li><li><a href="#">Separated link</a></li></ul></div> 
+	var lists = '';
+	for (var i = 0; i < _this.choices.length; i++) {
+		lists += '<li>'+ _this.choices[i] +'<li>'
+	};
+
+	frame_input.innerHTML = '<div class="btn-group btn-select dropup"><button type="button" class="btn btn-default btn-action" data-toggle="dropdown">SELECT COST</button><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu">'+ lists +'</ul></div><button type="button" class="btn btn-orange center-block button-submit">Submit</button>'; 
 	
 	this.firstclickHandler = function(){
 		if(_this.answer != null){
 			_this.secondScreen();
+			var a = _this.answer.replace(/ +/g, "");
+			_this.sdk.tracker('E', a);
 		}	
 	}
 
@@ -144,10 +199,7 @@ umobile.prototype.firstScreen = function(parent){
 	});
 
 	document.querySelector('.btn-action').addEventListener('click', function(){
-		// console.log('hello');
-		// $('.btn-select').addClass('open');
-		// document.querySelector('').classList.add('open');
-		// $('.btn-select').dropdown('toggle');
+		$('.dropdown-toggle').dropdown()
 	});
 
 	document.querySelector('.button-submit').addEventListener('click', _this.firstclickHandler, false);
@@ -164,7 +216,7 @@ umobile.prototype.secondScreen = function(){
 	var frame_input = document.createElement('DIV');
 	frame_input.setAttribute('class', 'frame_input');
 	frame.appendChild(frame_input);
-	frame_input.innerHTML = '<p class="notify hidden"></p><div class="input-group input-group-lg"><span class="input-group-addon" id="basic-addon1">'+ _this.prefix +'</span><input type="text" class="form-control form-control-number" placeholder="XXX XXXX" aria-describedby="basic-addon1" maxlength="7"></div><button type="button" class="btn btn-orange center-block button-accept btn-lg">I Accept</button>'
+	frame_input.innerHTML = '<form action="'+ _this.formUrl +'" method="post"><p class="notify hidden"></p><div class="input-group input-group-lg"><span class="input-group-addon" id="basic-addon1">'+ _this.prefix +'</span><input type="text" class="form-control form-control-number" name= "phone-number" placeholder="XXX XXXX" aria-describedby="basic-addon1" maxlength="7"></div><button type="button" class="btn btn-orange center-block button-accept btn-lg">I Accept</button></form>';
 
 	this.secondclickHandler = function(){
 		$('.notify').text('').addClass('hidden');
@@ -180,8 +232,6 @@ umobile.prototype.secondScreen = function(){
 			_this.thirdScreen();
 		}
 	}
-
-	// document.querySelector('.form-control-number').focus();
 	document.querySelector('.button-accept').addEventListener('click', _this.secondclickHandler, false);
 }
 
@@ -279,7 +329,31 @@ umobile.prototype.finalScreen = function(){
 	var logo = document.createElement('IMG');
 	logo.setAttribute('class', 'logo animated flipInY');
 	logo.setAttribute('src', _this.sdk.path + 'img/logo_lg.png');
+
+	var button = document.createElement('BUTTON');
+	button.setAttribute('type', 'button');
+	button.setAttribute('class', 'btn btn-orange center-block button-info btn-lg');
+	button.innerHTML = 'More Info';
 	frame.appendChild(logo);
+	frame.appendChild(button);
+
+	document.querySelector('.button-info').addEventListener('click', function(){
+		_this.sdk.tracker('CTR','site');
+        	_this.sdk.linkOpener('http://www.u.com.my/postpaid');
+	});
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", _this.formUrl, true);
+	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			// console.log('mobile=' + _this.number);
+			console.log(xhr.status);
+		}
+	};
+
+	setTimeout(function() {
+		xhr.send('mobile=' + _this.number);
+	}, 1000);
 }
 
 var u = new umobile();

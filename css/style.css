@@ -109,8 +109,8 @@ body {
 }
 
 img.logo {
-    margin-top: 135px;
-    margin-left: 98px;
+	margin-top: 135px;
+	margin-left: 98px;
 }
 
 
@@ -125,6 +125,11 @@ img.logo {
 .btn-select{
 	margin-top: 28px;
 	margin-left: 86px;
+}
+
+.button-info{
+	margin-top: 121px;
+	width: 48%;
 }
 
 .btn-default {
