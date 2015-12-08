@@ -322,7 +322,7 @@ umobile.prototype.seventhScreen = function(){
 	var _this = this;
 	document.querySelector('.sixth-holder').style.display = 'none';
 	var frame = document.createElement('DIV');
-	frame.setAttribute('class', 'seventh-holder animated tada wrapper');
+	frame.setAttribute('class', 'seventh-holder animated bounceInLeft wrapper');
 	_this.parent.appendChild(frame);
 
 	setTimeout(function(){
