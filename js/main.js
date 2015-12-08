@@ -113,7 +113,7 @@ var umobile = function(){
 
 	this.parent = document.getElementById('rma-widget');
 	this.answer = null;
-	this.prefix = '+6018'
+	this.prefix = '+6'
 	this.number = null;
 	this.choices = ['RM 70', 'RM 128', 'RM 158', 'RM 188'];
 	this.formUrl = 'https://api.mobileads.com/twilio/index.php';
@@ -216,7 +216,7 @@ umobile.prototype.secondScreen = function(){
 	var frame_input = document.createElement('DIV');
 	frame_input.setAttribute('class', 'frame_input');
 	frame.appendChild(frame_input);
-	frame_input.innerHTML = '<form action="'+ _this.formUrl +'" method="post"><p class="notify hidden"></p><div class="input-group input-group-lg"><span class="input-group-addon" id="basic-addon1">'+ _this.prefix +'</span><input type="text" class="form-control form-control-number" name= "phone-number" placeholder="XXX XXXX" aria-describedby="basic-addon1" maxlength="7"></div><button type="button" class="btn btn-orange center-block button-accept btn-lg">I Accept</button></form>';
+	frame_input.innerHTML = '<form action="'+ _this.formUrl +'" method="post"><p class="notify hidden"></p><div class="input-group input-group-lg"><span class="input-group-addon" id="basic-addon1">'+ _this.prefix +'</span><input type="text" class="form-control form-control-number" name= "phone-number" placeholder="XXX XXX XXXX" aria-describedby="basic-addon1" maxlength="10"></div><button type="button" class="btn btn-orange center-block button-accept btn-lg">I Accept</button></form>';
 
 	this.secondclickHandler = function(){
 		$('.notify').text('').addClass('hidden');
@@ -269,11 +269,11 @@ umobile.prototype.fifthScreen = function(status){
 	document.querySelector('.fourth-holder-' + status).style.display = 'none';
 	var frame = document.createElement('DIV');
 	frame.setAttribute('class', 'fifth-holder animated fadeIn wrapper');
-	frame.innerHTML = '<p class="countdown">5</p>'
+	frame.innerHTML = '<p class="countdown">3</p>'
 	_this.parent.appendChild(frame);
 
 	var seconds;
-	var duration = 4;
+	var duration = 3;
 	var timer = duration;
 	var countdown =  setInterval(function(){
 		seconds = parseInt(timer % 60, 10);
@@ -314,13 +314,25 @@ umobile.prototype.sixthScreen = function(){
 	}, 500);
 
 	setTimeout(function(){
-		_this.finalScreen();
+		_this.seventhScreen();
 	}, 3000);
+}
+
+umobile.prototype.seventhScreen = function(){
+	var _this = this;
+	document.querySelector('.sixth-holder').style.display = 'none';
+	var frame = document.createElement('DIV');
+	frame.setAttribute('class', 'seventh-holder animated tada wrapper');
+	_this.parent.appendChild(frame);
+
+	setTimeout(function(){
+		_this.finalScreen();
+	}, 5000);
 }
 
 umobile.prototype.finalScreen = function(){
 	var _this = this;
-	document.querySelector('.sixth-holder').style.display = 'none';
+	document.querySelector('.seventh-holder').style.display = 'none';
 	var frame = document.createElement('DIV');
 	frame.setAttribute('class', 'final-holder wrapper');
 
@@ -339,15 +351,16 @@ umobile.prototype.finalScreen = function(){
 
 	document.querySelector('.button-info').addEventListener('click', function(){
 		_this.sdk.tracker('CTR','site');
-        	_this.sdk.linkOpener('http://www.u.com.my/postpaid');
+        	_this.sdk.linkOpener('http://www.u.com.my/postpaidplans');
 	});
+
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", _this.formUrl, true);
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			// console.log('mobile=' + _this.number);
-			console.log(xhr.status);
+			// console.log(xhr.status);
 		}
 	};
 

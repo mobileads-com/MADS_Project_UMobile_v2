@@ -75,6 +75,11 @@ body {
 	overflow: hidden;
 }
 
+.seventh-holder {
+	background: url("../img/free.png") no-repeat;
+	overflow: hidden;
+}
+
 .final-holder{
 	/*background: url("../img/frame_7.png") no-repeat;*/
 	background-color: #332736;
