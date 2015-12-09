@@ -152,6 +152,7 @@ umobile.prototype.preload = function(){
 	'var frame_4_w = new Image();' +
 	'var frame_5 = new Image();' +
 	'var frame_6 = new Image();' +
+	'var free = new Image();' +
 	'var explode = new Image();' +
 	'var hero = new Image();' +
 	'var logo_lg = new Image();' +
@@ -162,6 +163,7 @@ umobile.prototype.preload = function(){
 	'frame_4_w.src='+ _this.sdk.path+' "img/frame_4_w.png";' +
 	'frame_5.src='+ _this.sdk.path+' "img/frame_5.png";' + 
 	'frame_6.src='+ _this.sdk.path+' "img/frame_6.png";' +
+	'free.src='+ _this.sdk.path+' "img/free.png";' +
 	'explode.src='+ _this.sdk.path+' "img/explode.png";' +
 	'hero.src='+ _this.sdk.path+' "img/hero.png";' +
 	'logo_lg.src='+ _this.sdk.path+' "img/logo_lg.png";';
@@ -326,13 +328,29 @@ umobile.prototype.seventhScreen = function(){
 	_this.parent.appendChild(frame);
 
 	setTimeout(function(){
+		_this.eightScreen();
+	}, 5000);
+}
+
+umobile.prototype.eightScreen = function(){
+	var _this = this;
+	document.querySelector('.seventh-holder').style.display = 'none';
+	var frame = document.createElement('DIV');
+	frame.setAttribute('class', 'eight-holder animated bounceInRight wrapper');
+	_this.parent.appendChild(frame);
+
+	var ookla = document.createElement('img');
+	ookla.setAttribute('class', 'ookla animated fadeOut');
+	ookla.setAttribute('src', _this.sdk.path + 'img/ookla_logo.png')
+	frame.appendChild(ookla);
+	setTimeout(function(){
 		_this.finalScreen();
 	}, 5000);
 }
 
 umobile.prototype.finalScreen = function(){
 	var _this = this;
-	document.querySelector('.seventh-holder').style.display = 'none';
+	document.querySelector('.eight-holder').style.display = 'none';
 	var frame = document.createElement('DIV');
 	frame.setAttribute('class', 'final-holder wrapper');
 

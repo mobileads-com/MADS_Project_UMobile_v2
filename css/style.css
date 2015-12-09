@@ -80,10 +80,23 @@ body {
 	overflow: hidden;
 }
 
+.eight-holder {
+	background-color: #332736;
+	overflow: hidden;
+}
+
 .final-holder{
 	/*background: url("../img/frame_7.png") no-repeat;*/
 	background-color: #332736;
 	overflow: hidden;
+}
+
+img.ookla {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 71px;
+	height: 332px;
 }
 
 .countdown {
