@@ -130,7 +130,6 @@ var umobile = function(){
 	});
 
 	this.sdk.loadCss(this.sdk.path + 'css/bootstrap.min.css');
-	this.sdk.loadCss(this.sdk.path + 'css/animate.min.css');
 	this.sdk.loadCss(this.sdk.path + 'css/style.css');
 	this.sdk.loadJs(this.sdk.path + 'js/jquery.js', function(){
 		_this.sdk.loadJs(_this.sdk.path + 'js/bootstrap.min.js');
@@ -155,6 +154,7 @@ umobile.prototype.preload = function(){
 	'var free = new Image();' +
 	'var explode = new Image();' +
 	'var hero = new Image();' +
+	'var ookla = new Image();' +
 	'var logo_lg = new Image();' +
 	'frame_1.src='+ _this.sdk.path+' "img/frame_1.png";' +
 	'frame_2.src='+ _this.sdk.path+' "img/frame_2.png";' +
@@ -166,7 +166,8 @@ umobile.prototype.preload = function(){
 	'free.src='+ _this.sdk.path+' "img/free.png";' +
 	'explode.src='+ _this.sdk.path+' "img/explode.png";' +
 	'hero.src='+ _this.sdk.path+' "img/hero.png";' +
-	'logo_lg.src='+ _this.sdk.path+' "img/logo_lg.png";';
+	'hero.src='+ _this.sdk.path+' "img/hero.png";' +
+	'ookla.src='+ _this.sdk.path+' "img/ookla_logo.png";';
 	script.innerHTML = str;
 	_this.sdk.bodyTag.appendChild(script);
 }
@@ -329,7 +330,7 @@ umobile.prototype.seventhScreen = function(){
 
 	setTimeout(function(){
 		_this.eightScreen();
-	}, 5000);
+	}, 4000);
 }
 
 umobile.prototype.eightScreen = function(){
@@ -345,7 +346,7 @@ umobile.prototype.eightScreen = function(){
 	frame.appendChild(ookla);
 	setTimeout(function(){
 		_this.finalScreen();
-	}, 5000);
+	}, 4000);
 }
 
 umobile.prototype.finalScreen = function(){
@@ -362,7 +363,7 @@ umobile.prototype.finalScreen = function(){
 
 	var button = document.createElement('BUTTON');
 	button.setAttribute('type', 'button');
-	button.setAttribute('class', 'btn btn-orange center-block button-info btn-lg');
+	button.setAttribute('class', 'btn btn-orange center-block button-info btn-lg animated fadeIn');
 	button.innerHTML = 'More Info';
 	frame.appendChild(logo);
 	frame.appendChild(button);
@@ -376,10 +377,7 @@ umobile.prototype.finalScreen = function(){
 	xhr.open("POST", _this.formUrl, true);
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			// console.log('mobile=' + _this.number);
-			// console.log(xhr.status);
-		}
+		if (xhr.readyState == 4 && xhr.status == 200) {}
 	};
 
 	setTimeout(function() {
