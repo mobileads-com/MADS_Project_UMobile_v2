@@ -127,7 +127,6 @@ var umobile = function(){
 	this.sdk = new mads();
 
 	this.parent = document.getElementById('rma-widget');
-	this.rawnumber = null;
 	this.answer = null;
 	this.prefix = '+6'
 	this.number = null;
@@ -165,25 +164,21 @@ umobile.prototype.preload = function(){
 	'var frame_3 = new Image();' +
 	'var frame_4_c = new Image();' +
 	'var frame_4_w = new Image();' +
-	// 'var frame_5 = new Image();' +
 	'var frame_6 = new Image();' +
 	'var free = new Image();' +
 	'var explode = new Image();' +
 	'var hero = new Image();' +
-	// 'var ookla = new Image();' +
 	'var logo_lg = new Image();' +
 	'frame_1.src='+ _this.sdk.path+' "img/frame_1.png";' +
 	'frame_2.src='+ _this.sdk.path+' "img/frame_2.png";' +
 	'frame_3.src='+ _this.sdk.path+' "img/frame_3.png";' +
 	'frame_4_c.src='+ _this.sdk.path+' "img/frame_4_c.png";' +
 	'frame_4_w.src='+ _this.sdk.path+' "img/frame_4_w.png";' +
-	// 'frame_5.src='+ _this.sdk.path+' "img/frame_5.png";' + 
 	'frame_6.src='+ _this.sdk.path+' "img/frame_6.png";' +
 	'free.src='+ _this.sdk.path+' "img/free.png";' +
 	'explode.src='+ _this.sdk.path+' "img/explode.png";' +
 	'hero.src='+ _this.sdk.path+' "img/hero.png";' +
 	'hero.src='+ _this.sdk.path+' "img/hero.png";';
-	// 'ookla.src='+ _this.sdk.path+' "img/ookla_logo.png";';
 	script.innerHTML = str;
 	_this.sdk.bodyTag.appendChild(script);
 }
