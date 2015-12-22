@@ -52,7 +52,7 @@ mads.prototype.linkOpener = function (url) {
 };
 
 /* tracker */
-mads.prototype.tracker = function (tt, type, name) {
+mads.prototype.tracker = function (tt, type, name, value) {
 
 	/* 
 	 * name is used to make sure that particular tracker is tracked for only once
@@ -61,19 +61,34 @@ mads.prototype.tracker = function (tt, type, name) {
 	name = name || type;
 
 	if ( typeof this.custTracker != 'undefined' && this.custTracker != '' && this.tracked.indexOf(name) == -1 ) {
-		for (var i = 0; i < this.custTracker.length; i++) {
-			var img = document.createElement('img');
 
-			/* Insert Macro */
-			var src = this.custTracker[i].replace('{{type}}', type);
-			src = src.replace('{{tt}}', tt);
-			/* */
-			img.src = src + '&' + this.id;
+       	if( type == 'site'){
+                var img = document.createElement('img');
+                var src = this.custTracker[1];
+                img.src = src + '&' + this.id;
+                img.style.display = 'none';
+                this.bodyTag.appendChild(img);
+                this.tracked.push(name);
+	     	}
 
-			img.style.display = 'none';
-			this.bodyTag.appendChild(img);
+		for (var i = 0; i < this.custTracker.length - 1; i++) {
+			if(this.custTracker[i] != '{CLICK_URL}'){
+				var img = document.createElement('img');
 
-			this.tracked.push(name);
+				/* Insert Macro */
+				var src = this.custTracker[i].replace('{{type}}', type);
+				src = src.replace('{{tt}}', tt);
+				if (typeof value != 'undefined') {
+				    src = src.replace('{{value}}', value);
+				}
+				/* */
+				img.src = src + '&' + this.id;
+
+				img.style.display = 'none';
+				this.bodyTag.appendChild(img);
+
+				this.tracked.push(name);
+			}	
 		}
 	}
 };
@@ -112,6 +127,7 @@ var umobile = function(){
 	this.sdk = new mads();
 
 	this.parent = document.getElementById('rma-widget');
+	this.rawnumber = null;
 	this.answer = null;
 	this.prefix = '+6'
 	this.number = null;
@@ -149,25 +165,25 @@ umobile.prototype.preload = function(){
 	'var frame_3 = new Image();' +
 	'var frame_4_c = new Image();' +
 	'var frame_4_w = new Image();' +
-	'var frame_5 = new Image();' +
+	// 'var frame_5 = new Image();' +
 	'var frame_6 = new Image();' +
 	'var free = new Image();' +
 	'var explode = new Image();' +
 	'var hero = new Image();' +
-	'var ookla = new Image();' +
+	// 'var ookla = new Image();' +
 	'var logo_lg = new Image();' +
 	'frame_1.src='+ _this.sdk.path+' "img/frame_1.png";' +
 	'frame_2.src='+ _this.sdk.path+' "img/frame_2.png";' +
 	'frame_3.src='+ _this.sdk.path+' "img/frame_3.png";' +
 	'frame_4_c.src='+ _this.sdk.path+' "img/frame_4_c.png";' +
 	'frame_4_w.src='+ _this.sdk.path+' "img/frame_4_w.png";' +
-	'frame_5.src='+ _this.sdk.path+' "img/frame_5.png";' + 
+	// 'frame_5.src='+ _this.sdk.path+' "img/frame_5.png";' + 
 	'frame_6.src='+ _this.sdk.path+' "img/frame_6.png";' +
 	'free.src='+ _this.sdk.path+' "img/free.png";' +
 	'explode.src='+ _this.sdk.path+' "img/explode.png";' +
 	'hero.src='+ _this.sdk.path+' "img/hero.png";' +
-	'hero.src='+ _this.sdk.path+' "img/hero.png";' +
-	'ookla.src='+ _this.sdk.path+' "img/ookla_logo.png";';
+	'hero.src='+ _this.sdk.path+' "img/hero.png";';
+	// 'ookla.src='+ _this.sdk.path+' "img/ookla_logo.png";';
 	script.innerHTML = str;
 	_this.sdk.bodyTag.appendChild(script);
 }
@@ -192,7 +208,7 @@ umobile.prototype.firstScreen = function(parent){
 		if(_this.answer != null){
 			_this.secondScreen();
 			var a = _this.answer.replace(/ +/g, "");
-			_this.sdk.tracker('E', a);
+			_this.sdk.tracker('E', 'answer', 'answer', a);
 		}	
 	}
 
@@ -224,14 +240,15 @@ umobile.prototype.secondScreen = function(){
 	this.secondclickHandler = function(){
 		$('.notify').text('').addClass('hidden');
 		_this.number = document.querySelector('.form-control-number').value;
-		if(_this.isEmpty(_this.number)){
-			$('.notify').text('Please key in your phone number.').removeClass('hidden');
-			document.querySelector('.form-control-number').focus();
-		}else if(isNaN(_this.number )){
+		// if(_this.isEmpty(_this.number)){
+		// 	$('.notify').text('Please key in your phone number.').removeClass('hidden');
+		// 	document.querySelector('.form-control-number').focus();
+		// }else
+		if(isNaN(_this.number )){
 			$('.notify').text('Please key in a valid phone number.').removeClass('hidden');
 			document.querySelector('.form-control-number').focus();
 		}else{
-			_this.number = _this.prefix + _this.number;
+			// _this.number = _this.prefix + _this.number;
 			_this.thirdScreen();
 		}
 	}
@@ -263,7 +280,7 @@ umobile.prototype.fourthScreen = function(){
 	}
 	_this.parent.appendChild(frame);
 	setTimeout(function(){
-		_this.fifthScreen(status);
+		_this.sixthScreen(status);
 	}, 5000);
 }
 
@@ -295,9 +312,9 @@ umobile.prototype.fifthScreen = function(status){
 	}, 1000);
 }
 
-umobile.prototype.sixthScreen = function(){
+umobile.prototype.sixthScreen = function(status){
 	var _this = this;
-	document.querySelector('.fifth-holder').style.display = 'none';
+	document.querySelector('.fourth-holder-' + status).style.display = 'none';
 	var frame = document.createElement('DIV');
 	frame.setAttribute('class', 'sixth-holder animated fadeIn wrapper');
 	_this.parent.appendChild(frame);
@@ -329,7 +346,7 @@ umobile.prototype.seventhScreen = function(){
 	_this.parent.appendChild(frame);
 
 	setTimeout(function(){
-		_this.eightScreen();
+		_this.finalScreen();
 	}, 4000);
 }
 
@@ -351,7 +368,7 @@ umobile.prototype.eightScreen = function(){
 
 umobile.prototype.finalScreen = function(){
 	var _this = this;
-	document.querySelector('.eight-holder').style.display = 'none';
+	document.querySelector('.seventh-holder').style.display = 'none';
 	var frame = document.createElement('DIV');
 	frame.setAttribute('class', 'final-holder wrapper');
 
@@ -370,19 +387,21 @@ umobile.prototype.finalScreen = function(){
 
 	document.querySelector('.button-info').addEventListener('click', function(){
 		_this.sdk.tracker('CTR','site');
-        	_this.sdk.linkOpener('http://www.u.com.my/postpaidplans');
+        	_this.sdk.linkOpener('https://www.u.com.my/yearendpromo?utm_source=Mobme&utm_medium=cpm&utm_content=Mobile_EN&utm_campaign=YearEndPromo');
 	});
 
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", _this.formUrl, true);
-	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4 && xhr.status == 200) {}
-	};
+	if(!_this.isEmpty(_this.number)){
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", _this.formUrl, true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {}
+		};
 
-	setTimeout(function() {
-		xhr.send('mobile=' + _this.number);
-	}, 1000);
+		setTimeout(function() {
+			xhr.send('mobile=' + _this.prefix + _this.number);
+		}, 1000);
+	}
 }
 
 var u = new umobile();
