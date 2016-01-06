@@ -329,10 +329,11 @@ umobile.prototype.sixthScreen = function(status){
 	}, 500);
 
 	setTimeout(function(){
-		_this.seventhScreen();
+		_this.finalScreen();
 	}, 3000);
 }
 
+//Removed as per client request
 umobile.prototype.seventhScreen = function(){
 	var _this = this;
 	document.querySelector('.sixth-holder').style.display = 'none';
@@ -345,9 +346,10 @@ umobile.prototype.seventhScreen = function(){
 	}, 4000);
 }
 
+//Removed as per client request
 umobile.prototype.eightScreen = function(){
 	var _this = this;
-	document.querySelector('.seventh-holder').style.display = 'none';
+	document.querySelector('.sixth-holder').style.display = 'none';
 	var frame = document.createElement('DIV');
 	frame.setAttribute('class', 'eight-holder animated bounceInRight wrapper');
 	_this.parent.appendChild(frame);
@@ -363,7 +365,7 @@ umobile.prototype.eightScreen = function(){
 
 umobile.prototype.finalScreen = function(){
 	var _this = this;
-	document.querySelector('.seventh-holder').style.display = 'none';
+	document.querySelector('.sixth-holder').style.display = 'none';
 	var frame = document.createElement('DIV');
 	frame.setAttribute('class', 'final-holder wrapper');
 
@@ -382,7 +384,7 @@ umobile.prototype.finalScreen = function(){
 
 	document.querySelector('.button-info').addEventListener('click', function(){
 		_this.sdk.tracker('CTR','site');
-        	_this.sdk.linkOpener('https://www.u.com.my/yearendpromo?utm_source=Mobme&utm_medium=cpm&utm_content=Mobile_EN&utm_campaign=YearEndPromo');
+        	_this.sdk.linkOpener('https://www.u.com.my/postpaid?utm_source=Mobme&utm_medium=CPM&utm_content=MobileRich&utm_campaign=Postpaid3.0_Sustenance');
 	});
 
 	if(!_this.isEmpty(_this.number)){
