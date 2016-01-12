@@ -144,12 +144,13 @@ var umobile = function(){
 		}
 	});
 
-	this.sdk.loadCss(this.sdk.path + 'css/bootstrap.min.css');
 	this.sdk.loadCss(this.sdk.path + 'css/style.css');
+    _this.firstScreen(_this.parent);
+    
+	this.sdk.loadCss(this.sdk.path + 'css/bootstrap.min.css');
 	this.sdk.loadJs(this.sdk.path + 'js/jquery.js', function(){
 		_this.sdk.loadJs(_this.sdk.path + 'js/bootstrap.min.js');
 		_this.preload();
-		_this.firstScreen(_this.parent);
 	});	
 }
 
@@ -207,7 +208,7 @@ umobile.prototype.firstScreen = function(parent){
 		}	
 	}
 
-	$('.dropdown-menu li').click(function(event) {
+	document.querySelector('.dropdown-menu li').addEventListener('click', function(event) {
 		document.querySelector('.btn-action').innerHTML = $(this).text();
 		_this.answer = $(this).text();
 	});
