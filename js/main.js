@@ -234,8 +234,12 @@ umobile.prototype.secondScreen = function(){
 	frame_input.innerHTML = '<form action="'+ _this.formUrl +'" method="post"><p class="notify hidden"></p><div class="input-group input-group-lg"><span class="input-group-addon" id="basic-addon1">'+ _this.prefix +'</span><input type="text" class="form-control form-control-number" name= "phone-number" placeholder="XXX XXX XXXX" aria-describedby="basic-addon1" maxlength="10"></div><button type="button" class="btn btn-orange center-block button-accept btn-lg">I Accept</button></form>';
 
 	this.secondclickHandler = function(){
+        
+        
+        
 		$('.notify').text('').addClass('hidden');
 		_this.number = document.querySelector('.form-control-number').value;
+        _this.sdk.tracker('E','accept', 'accept', _this.number);
 		// if(_this.isEmpty(_this.number)){
 		// 	$('.notify').text('Please key in your phone number.').removeClass('hidden');
 		// 	document.querySelector('.form-control-number').focus();
