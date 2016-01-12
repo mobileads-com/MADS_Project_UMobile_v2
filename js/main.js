@@ -195,7 +195,7 @@ umobile.prototype.firstScreen = function(parent){
 	frame.appendChild(frame_input);
 	var lists = '';
 	for (var i = 0; i < _this.choices.length; i++) {
-		lists += '<li>'+ _this.choices[i] +'<li>'
+		lists += '<li id="answer-'+_this.choices[i].replace('RM ','')+'">'+ _this.choices[i] +'<li>'
 	};
 
 	frame_input.innerHTML = '<div class="btn-group btn-select dropup"><button type="button" class="btn btn-default btn-action" data-toggle="dropdown">SELECT COST</button><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu">'+ lists +'</ul></div><button type="button" class="btn btn-orange center-block button-submit">Submit</button>'; 
@@ -208,16 +208,28 @@ umobile.prototype.firstScreen = function(parent){
 		}	
 	}
 
-	document.querySelector('.dropdown-menu li').addEventListener('click', function(event) {
-		document.querySelector('.btn-action').innerHTML = $(this).text();
-		_this.answer = $(this).text();
-	});
-
 	document.querySelector('.btn-action').addEventListener('click', function(){
 		$('.dropdown-toggle').dropdown()
 	});
 
 	document.querySelector('.button-submit').addEventListener('click', _this.firstclickHandler, false);
+    
+    document.getElementById('answer-70').addEventListener('click', function () {
+        document.querySelector('.btn-action').innerHTML = event.target.innerText;
+		_this.answer = event.target.innerText;
+    });
+    document.getElementById('answer-128').addEventListener('click', function () {
+        document.querySelector('.btn-action').innerHTML = event.target.innerText;
+		_this.answer = event.target.innerText;
+    });
+    document.getElementById('answer-158').addEventListener('click', function () {
+        document.querySelector('.btn-action').innerHTML = event.target.innerText;
+		_this.answer = event.target.innerText;
+    });
+    document.getElementById('answer-188').addEventListener('click', function () {
+        document.querySelector('.btn-action').innerHTML = event.target.innerText;
+		_this.answer = event.target.innerText;
+    });
 }
 
 umobile.prototype.secondScreen = function(){
